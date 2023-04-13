@@ -1,10 +1,8 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
+
 
 
 export default function Dashboard() {
-    return (
-        <div>
-            <h1>Dashboard page should be here</h1>
-        </div>
-    )
+    return <h1>Dashboard page goes here</h1>
 }
