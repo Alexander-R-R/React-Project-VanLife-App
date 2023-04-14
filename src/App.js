@@ -9,6 +9,7 @@ import Dashboard from "./pages/Host/Dashboard";
 import Income from "./pages/Host/Income"
 import Reviews from "./pages/Host/Reviews"
 import HostLayout from "./components/HostLayout";
+import Footer from "./components/Footer";
 
 export default function App() {
   return (
