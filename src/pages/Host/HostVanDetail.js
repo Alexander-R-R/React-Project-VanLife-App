@@ -1,36 +1,71 @@
 import React from "react";
-import { useParams } from "react-router-dom";
-
+import { useParams, Link, NavLink, Outlet } from "react-router-dom";
 
 export default function HostVansDetail() {
-
-  const params = useParams()
-  const [currentVan, setCurrentVan] = React.useState([])
+  const params = useParams();
+  const [currentVan, setCurrentVan] = React.useState(null);
 
   React.useEffect(() => {
-      fetch(`{/api/host/vans/${params.id}`)
-       .then(res => res.json())
-       .then(data => setCurrentVan(data.vans))
-
-  }, [])
+    fetch(`/api/host/vans/${params.id}`)
+      .then((res) => res.json())
+      .then((data) => setCurrentVan(data.vans));
+  }, []);
 
   if (!currentVan) {
-    return <h1>Loading...</h1>
+    return <h1>Loading...</h1>;
   }
 
-  // const vanElement = currentVan.map((van) => (
-  //   <div key={van.id}>
-  //     <h1>{van.name}</h1>
-  //   </div>
-  // ))
+  const activeStyle = {
+    fontWeight: "bold",
+    textDecoration: "underline",
+    color: "#161616"
+  }
 
   return (
-    <div>
-      <p>{currentVan.type}</p>
-      <img src={currentVan.imageUrl} width={150}  />
-      <h1>{currentVan.name}</h1>
-      <p>${currentVan.price}/day</p>
+    <section>
+      <Link 
+          to=".." 
+          relative="path" 
+          className="back-button"
+      >
+        <span>Back to all vans</span>
+      </Link>
+      <div className="host-van-detail-layout-container">
+        <div className="host-van-detail">
+          <img src={currentVan.imageUrl} />
+          <div className="host-van-detail-info-text">
+            <i className={`van-type van-type-${currentVan.type}`}>
+              {currentVan.type}
+            </i>
+            <h3>{currentVan.name}</h3>
+            <h4>${currentVan.price}/day</h4>
+          </div>
+        </div>
+        <section>
+          <NavLink
+            to="details"
+            style={({isActive}) => isActive ? activeStyle : null}
+          >
+            Details
+          </NavLink>
 
-    </div>
+          <NavLink
+            to="pricing"
+            style={({isActive}) => isActive ? activeStyle : null}
+          >
+            Pricing
+          </NavLink>
+
+          <NavLink
+            to="photos"
+            style={({isActive}) => isActive ? activeStyle : null}
+          >
+            Photos
+          </NavLink>
+
+        </section>
+        <Outlet />
+      </div>
+    </section>
   );
 }
