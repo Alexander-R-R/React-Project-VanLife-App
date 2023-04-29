@@ -1,8 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 export default function Vans() {
+
+  const [searchParams, setSearchParams] = useSearchParams()
   const [vansData, setVansData] = React.useState([]);
+
+  const typeFilter = searchParams.get("type")
+
+  console.log(typeFilter)
 
   React.useEffect(() => {
     fetch("/api/vans")
@@ -10,7 +16,10 @@ export default function Vans() {
       .then((data) => setVansData(data.vans));
   }, []);
 
-  const vansElements = vansData.map((van) => (
+  const displayedVans = typeFilter ? vansData.filter(van => van.type.toLowerCase() === typeFilter) : vansData
+
+  const vansElements = displayedVans
+  .map((van) => (
     <div key={van.id} className="van-tile">
       <Link to={`/vans/${van.id}`}>
         <img src={van.imageUrl} />
