@@ -41,6 +41,7 @@ export default function App() {
 
                  </Route>
               </Route>
+              <Route path="*" element={<h1> Page not found 404</h1>}/>
             </Route>
           </Routes>
         </BrowserRouter>
