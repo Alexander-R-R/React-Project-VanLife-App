@@ -1,36 +1,17 @@
 import React from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useLoaderData } from "react-router-dom";
 import { getVans } from "../../api";
+
+export function loader() {
+  return getVans();
+}
 
 export default function Vans() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [vansData, setVansData] = React.useState([]);
-  const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
 
+  const vansData = useLoaderData();
   const typeFilter = searchParams.get("type");
-
-  React.useEffect(() => {
-    async function loadVans() {
-      setLoading(true);
-      try {
-        const data = await getVans();
-        setVansData(data);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadVans();
-  }, []);
-
-  // React.useEffect(() => {
-  //   fetch("/api/vans")
-  //     .then((res) => res.json())
-  //     .then((data) => setVansData(data.vans));
-  // }, []);
 
   const displayedVans = typeFilter
     ? vansData.filter((van) => van.type.toLowerCase() === typeFilter)
@@ -66,12 +47,8 @@ export default function Vans() {
     });
   }
 
-  if (loading) {
-    return <h1>Loading...</h1>;
-  }
-
   if (error) {
-    return <h1>There was an error: {error.message}</h1>
+    return <h1>There was an error: {error.message}</h1>;
   }
 
   return (
