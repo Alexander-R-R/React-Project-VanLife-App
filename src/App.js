@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from 'react-dom/client'
+import ReactDOM from "react-dom/client";
 import {
   Route,
   RouterProvider,
@@ -22,19 +22,21 @@ import HostVanPhotos from "./pages/Host/HostVanPhotos";
 import HostVanPricing from "./pages/Host/HostVanPricing";
 import HostVanInfo from "./pages/Host/HostVanInfo";
 import NotFound from "./pages/NotFound";
-import {loader as loaderVans} from "./pages/Vans/Vans"
+import { loader as loaderVans } from "./pages/Vans/Vans";
 import Error from "./components/Error";
+import Login from "./pages/Login";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
       <Route index element={<Home />} />
       <Route path="about" element={<About />} />
-      <Route 
-      path="vans" 
-      element={<Vans />}
-      errorElement={<Error />} 
-      loader={loaderVans} 
+      <Route path="login" element={<Login />} />
+      <Route
+        path="vans"
+        element={<Vans />}
+        errorElement={<Error />}
+        loader={loaderVans}
       />
       <Route path="vans/:id" element={<VanDetails />} />
 
@@ -56,15 +58,11 @@ const router = createBrowserRouter(
 );
 
 export default function App() {
-  return (
-       <RouterProvider router={router}/>
-  );
+  return <RouterProvider router={router} />;
 }
 
-
-
-
-{/* <React.StrictMode>
+{
+  /* <React.StrictMode>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Layout />}>
@@ -89,4 +87,5 @@ export default function App() {
             </Route>
           </Routes>
         </BrowserRouter>
-      </React.StrictMode> */}
+      </React.StrictMode> */
+}
