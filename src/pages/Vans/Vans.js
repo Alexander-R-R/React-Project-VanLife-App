@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useSearchParams, useLoaderData } from "react-router-dom";
 import { getVans } from "../../api";
 
-export function loader() {
+export async function loader() {
   return getVans();
 }
 
@@ -14,7 +14,7 @@ export default function Vans() {
   const typeFilter = searchParams.get("type");
 
   const displayedVans = typeFilter
-    ? vansData.filter((van) => van.type.toLowerCase() === typeFilter)
+    ? vansData.filter((van) => van.type === typeFilter)
     : vansData;
 
   const vansElements = displayedVans.map((van) => (

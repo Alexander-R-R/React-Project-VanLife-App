@@ -15,20 +15,21 @@ import Income from "./pages/Host/Income";
 import Reviews from "./pages/Host/Reviews";
 import HostLayout from "./components/HostLayout";
 import HostVans, { loader as loaderHostVans } from "./pages/Host/HostVans";
-import HostVanDetail from "./pages/Host/HostVanDetail";
+import HostVanDetail, { loader as loaderHostVanDetail } from "./pages/Host/HostVanDetail";
 import HostVanPhotos from "./pages/Host/HostVanPhotos";
 import HostVanPricing from "./pages/Host/HostVanPricing";
 import HostVanInfo from "./pages/Host/HostVanInfo";
 import NotFound from "./pages/NotFound";
 import Error from "./components/Error";
-import Login from "./pages/Login";
+import Login, { loader as loaderLogin} from "./pages/Login";
+import { requireAuth } from "./utils";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
       <Route index element={<Home />} />
       <Route path="about" element={<About />} />
-      <Route path="login" element={<Login />} />
+      <Route path="login" element={<Login />} loader={loaderLogin}/>
       <Route
         path="vans"
         element={<Vans />}
@@ -37,13 +38,13 @@ const router = createBrowserRouter(
       />
       <Route path="vans/:id" element={<VanDetails />} loader={loaderVanDetails} />
 
-      <Route path="host" element={<HostLayout />} loader={ async () => { return null }}>
-        <Route index element={<Dashboard />} loader={ async () => { return null }}/>
-        <Route path="income" element={<Income />} loader={ async () => { return null }}/>
-        <Route path="reviews" element={<Reviews />} loader={ async () => { return null }}/>
+      <Route path="host" element={<HostLayout />} >
+        <Route index element={<Dashboard />} loader={ async () => await requireAuth() }/>
+        <Route path="income" element={<Income />} loader={async () => await requireAuth()}/>
+        <Route path="reviews" element={<Reviews />} loader={async () => await requireAuth()}/>
         <Route path="vans" element={<HostVans />} loader={loaderHostVans}/>
 
-        <Route path="vans/:id" element={<HostVanDetail />}>
+        <Route path="vans/:id" element={<HostVanDetail />} loader={loaderHostVanDetail}>
           <Route index element={<HostVanInfo />} />
           <Route path="pricing" element={<HostVanPricing />} />
           <Route path="photos" element={<HostVanPhotos />} />
