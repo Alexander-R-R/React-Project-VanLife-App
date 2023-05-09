@@ -14,13 +14,13 @@ export default function Vans() {
   const typeFilter = searchParams.get("type");
 
   const displayedVans = typeFilter
-    ? vansData.filter((van) => van.type === typeFilter)
+    ? vansData.filter(van => van.type === typeFilter)
     : vansData;
 
-  const vansElements = displayedVans.map((van) => (
+  const vansElements = displayedVans.map(van => (
     <div key={van.id} className="van-tile">
       <Link
-        to={`${van.id}`}
+        to={van.id}
         state={{ search: `?${searchParams.toString()}`, type: typeFilter }}
       >
         <img src={van.imageUrl} />
@@ -37,7 +37,7 @@ export default function Vans() {
   ));
 
   function handleFilterChange(key, value) {
-    setSearchParams((prevParams) => {
+    setSearchParams(prevParams => {
       if (value === null) {
         prevParams.delete(key);
       } else {
