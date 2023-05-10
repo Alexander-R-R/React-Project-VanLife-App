@@ -58,24 +58,24 @@ const router = createBrowserRouter(
         <Route
           index
           element={<Dashboard />}
-          loader={async () => {
-            await requireAuth()
+          loader={async ({ request }) => {
+            await requireAuth(request)
             return null
           }}
         />
         <Route
           path="income"
           element={<Income />}
-          loader={async () => {
-            await requireAuth()
+          loader={async ({ request }) => {
+            await requireAuth(request)
             return null
           }}
         />
         <Route
           path="reviews"
           element={<Reviews />}
-          loader={async () => {
-            await requireAuth()
+          loader={async ({ request }) => {
+            await requireAuth(request)
             return null
           }}
         />
@@ -86,9 +86,29 @@ const router = createBrowserRouter(
           element={<HostVanDetail />}
           loader={loaderHostVanDetail}
         >
-          <Route index element={<HostVanInfo />} />
-          <Route path="pricing" element={<HostVanPricing />} />
-          <Route path="photos" element={<HostVanPhotos />} />
+          <Route 
+            index 
+            element={<HostVanInfo />}
+            loader={async ({ request }) => {
+              await requireAuth(request)
+              return null
+            }}
+          />
+          <Route
+              path="pricing" 
+              element={<HostVanPricing />} 
+              loader={async ({ request }) => {
+                await requireAuth(request)
+                return null
+              }}
+          />
+          <Route
+             path="photos" 
+             element={<HostVanPhotos />}
+             loader={async ({ request }) => {
+            return await requireAuth(request) || null
+            }}
+          />
         </Route>
       </Route>
       <Route path="*" element={<NotFound />} />

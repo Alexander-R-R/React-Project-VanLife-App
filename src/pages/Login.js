@@ -16,10 +16,11 @@ export async function action({ request }) {
   const formData = await request.formData()
   const email = formData.get("email")
   const password = formData.get("password")
+  const pathname = new URL(request.url).searchParams.get("redirectTo") || "/host"
   try {
     const data = await loginUser({ email, password })
     localStorage.setItem("loggedin", true)
-    return redirect("/host")
+    return redirect(pathname)
   } catch(err) {
     return err.message
   }
@@ -36,7 +37,12 @@ export default function Login() {
       <h1>Sign in to your account</h1>
       {message && <h3 className="red">{message}</h3>}
       {errorMessage && <h3 className="red">{errorMessage}</h3>}
-      <Form method="post"  className="login-form" replace>
+
+      <Form 
+          method="post"  
+          className="login-form" 
+          replace
+      >
         <input
           name="email"
           type="email"
@@ -49,7 +55,9 @@ export default function Login() {
           placeholder="Password"
           
         />
-        <button disabled={navigation.state === "submitting"}>
+        <button 
+           disabled={navigation.state === "submitting"}
+        >
           {navigation.state === "submitting" ? "Logging in..." : "Log in"}
         </button>
       </Form>
