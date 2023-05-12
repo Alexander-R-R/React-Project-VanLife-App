@@ -12,7 +12,7 @@ import Vans, { loader as loaderVans } from "./pages/Vans/Vans";
 import VanDetails, {
   loader as loaderVanDetails,
 } from "./pages/Vans/VanDetails";
-import Dashboard from "./pages/Host/Dashboard";
+import Dashboard, { loader as loaderDashboard} from "./pages/Host/Dashboard";
 import Income from "./pages/Host/Income";
 import Reviews from "./pages/Host/Reviews";
 import HostLayout from "./components/HostLayout";
@@ -60,10 +60,7 @@ const router = createBrowserRouter(
           index
           element={<Dashboard />}
           errorElement={<Error />}
-          loader={async ({ request }) => {
-            await requireAuth(request)
-            return null
-          }}
+          loader={loaderDashboard}
         />
         <Route
           path="income"
