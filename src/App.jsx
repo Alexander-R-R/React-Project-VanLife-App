@@ -30,6 +30,7 @@ import Login, {
   action as actionLogin,
 } from "./pages/Login";
 import { requireAuth } from "./utils";
+import "./server"
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -55,7 +56,7 @@ const router = createBrowserRouter(
         loader={loaderVanDetails}
       />
 
-      <Route path="host" element={<HostLayout />}>
+      <Route path="host" element={<HostLayout />} >
         <Route
           index
           element={<Dashboard />}
@@ -65,6 +66,7 @@ const router = createBrowserRouter(
         <Route
           path="income"
           element={<Income />}
+          errorElement={<Error />}
           loader={async ({ request }) => {
             await requireAuth(request)
             return null
@@ -73,6 +75,7 @@ const router = createBrowserRouter(
         <Route
           path="reviews"
           element={<Reviews />}
+          errorElement={<Error />}
           loader={async ({ request }) => {
             await requireAuth(request)
             return null
