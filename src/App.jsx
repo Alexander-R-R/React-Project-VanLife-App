@@ -51,6 +51,7 @@ const router = createBrowserRouter(
       <Route
         path="vans/:id"
         element={<VanDetails />}
+        errorElement={<Error />}
         loader={loaderVanDetails}
       />
 
@@ -58,6 +59,7 @@ const router = createBrowserRouter(
         <Route
           index
           element={<Dashboard />}
+          errorElement={<Error />}
           loader={async ({ request }) => {
             await requireAuth(request)
             return null
@@ -79,11 +81,12 @@ const router = createBrowserRouter(
             return null
           }}
         />
-        <Route path="vans" element={<HostVans />} loader={loaderHostVans} />
+        <Route path="vans" element={<HostVans />} errorElement={<Error />} loader={loaderHostVans} />
 
         <Route
           path="vans/:id"
           element={<HostVanDetail />}
+          errorElement={<Error />}
           loader={loaderHostVanDetail}
         >
           <Route 
@@ -117,7 +120,9 @@ const router = createBrowserRouter(
 );
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+  <RouterProvider router={router} />
+  );
 }
 
 {
