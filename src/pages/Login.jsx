@@ -20,9 +20,9 @@ export async function action({ request }) {
   
   try {
     const data = await loginUser({ email, password })
-    localStorage.setItem("loggedin", true)
+    localStorage.setItem("loggedin", true )
     return redirect(pathname)
-  } catch(err) {
+} catch(err) {
     return err.message
   }
 }
@@ -31,13 +31,15 @@ export default function Login() {
   const errorMessage = useActionData()
   const message = useLoaderData();
   const navigation = useNavigation()
+  
+  
 
 
   return (
     <div className="login-container">
       <h1>Sign in to your account</h1>
-      {message && <h3 className="red">{  message  }</h3>}
-      {errorMessage && <h3 className="red"></h3>}
+      {message && <h3 className="red">{message}</h3>}
+      {errorMessage && <h3 className="red">{errorMessage.message}</h3>}
 
       <Form 
           method="post"  
@@ -57,7 +59,10 @@ export default function Login() {
         <button 
            disabled={navigation.state === "submitting"}
         >
-          {navigation.state === "submitting" ? "Logging in..." : "Log in"}
+          {navigation.state === "submitting"
+           ? "Logging in..." 
+           : "Log in"
+           }
         </button>
       </Form>
     </div>
